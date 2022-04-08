@@ -1,0 +1,11 @@
+PickUpRequest:
+  type: object
+  properties:
+    destinationFloor:
+      type: integer
+      minimum: 0
+    direction:
+      $ref: "../enums/direction.yaml#/Direction"
+  required:
+    - destinationFloor
+    - direction

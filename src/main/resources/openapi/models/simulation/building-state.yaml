@@ -1,0 +1,14 @@
+BuildingState:
+  type: object
+  properties:
+    elevators:
+      type: array
+      items:
+        $ref: "../elevators/elevator.yaml#/Elevator"
+    waiting:
+      type: array
+      items:
+        $ref: "utils/waiting-on-given-floor.yaml#/WaitingOnGivenFloor"
+  required:
+    - elevators
+    - waiting

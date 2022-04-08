@@ -1,0 +1,24 @@
+post:
+  operationId: pick_up
+  summary: send a request for an elevator
+  tags:
+    - elevators
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../models/elevators/pick-up/pick-up-request.yaml#/PickUpRequest"
+  responses:
+    200:
+      description: request sent
+      content:
+        application/json:
+          schema:
+            $ref: "../../models/simulation/building-state.yaml#/BuildingState"
+    400:
+      description: Bad Request
+    404:
+      description: Wrong value of the parameter "current floor"
+    422:
+      description: Business Logic Violation

@@ -1,0 +1,5 @@
+Direction:
+  type: string
+  enum:
+    - up
+    - down

@@ -1,0 +1,27 @@
+openapi: 3.0.3
+info:
+  title: WebElevatorSystem
+  description: API for web-elevator-system app
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: simulation
+    description: simulation related endpoints
+  - name: elevators
+    description: operations concerning elevators
+
+paths:
+  /simulation/start:
+    $ref: "paths/simulation/start.yaml"
+  /simulation/next-step:
+    $ref: "paths/simulation/next-step.yaml"
+  /simulation/status:
+    $ref: "paths/simulation/status.yaml"
+
+  /elevators/pick-up:
+    $ref: "paths/elevators/pick-up.yaml"
+  /elevators/{elevator-id}/status:
+    $ref: "paths/elevators/elevator-id/status.yaml"
+  /elevators/{elevator-id}/destination-floor:
+    $ref: "paths/elevators/elevator-id/destination-floor.yaml"

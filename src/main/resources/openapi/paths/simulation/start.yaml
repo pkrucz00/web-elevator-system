@@ -1,0 +1,20 @@
+post:
+  operationId: simulation_start
+  summary: Starts the elevator system simulation
+  tags:
+    - simulation
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../models/simulation/form/startSimulationForm.yaml#/StartSimulationForm"
+  responses:
+    201:
+      description: Simulation successfully started
+      content:
+        application/json:
+          schema:
+            $ref: "../../models/simulation/building-state.yaml#/BuildingState"
+    400:
+      description: Bad request

@@ -1,0 +1,12 @@
+get:
+  operationId: get_simulation_status
+  summary: Get simmulation status
+  tags:
+    - simulation
+  responses:
+    200:
+      description: Shows the simulation
+      content:
+        application/json:
+          schema:
+            $ref: "../../models/simulation/building-state.yaml#/BuildingState"

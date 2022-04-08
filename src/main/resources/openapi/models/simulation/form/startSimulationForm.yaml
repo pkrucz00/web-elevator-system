@@ -1,0 +1,14 @@
+StartSimulationForm:
+  type: object
+  properties:
+    numberOfElevators:
+      type: integer
+      minimum: 1
+      maximum: 16
+    numberOfFloors:
+      type: integer
+      minimum: 2
+      maximum: 42
+  required:
+    - numberOfElevators
+    - numberOfFloors

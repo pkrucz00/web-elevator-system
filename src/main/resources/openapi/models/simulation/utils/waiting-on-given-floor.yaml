@@ -1,0 +1,9 @@
+WaitingOnGivenFloor:
+  type: object
+  properties:
+    floorNumber:
+      type: integer
+      minimum: 1
+    numberOfPeople:
+      type: integer
+      minimum: 1

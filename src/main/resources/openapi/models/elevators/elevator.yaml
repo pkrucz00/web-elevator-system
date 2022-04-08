@@ -1,0 +1,27 @@
+Elevator:
+  type: object
+  properties:
+    id:
+      type: string
+      format: uuid
+    number:
+      type: integer
+      minimum: 1
+    currentFloor:
+      type: integer
+      minimum: 0
+    destinationFloor:
+      type: integer
+      minimum: 0
+    numberOfPeopleInside:
+      type: integer
+      minimum: 0
+    directionStatus:
+      $ref: "enums/elevator-status.yaml#/ElevatorStatus"
+  required:
+    - id
+    - number
+    - currentFloor
+    - numberOfPeopleInside
+    - directionStatus
+

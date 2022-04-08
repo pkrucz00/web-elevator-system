@@ -1,0 +1,31 @@
+patch:
+  operationId: patch_elevator_status
+  summary: change the status of the given elevator
+  tags:
+    - elevators
+  paramters:
+    - in: path
+      name: elevatorId
+      schema:
+        type: string
+        format: uuid
+      required: true
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../../models/elevators/patch-objects/status-object.yaml#/StatusObject"
+  responses:
+    200:
+      description: Elevator with changed direction
+      content:
+        application/json:
+          schema:
+            $ref: "../../../models/elevators/elevator.yaml#/Elevator"
+    400:
+      description: Bad Request
+    404:
+      description: Elevator with the given id doesn't exist
+    422:
+      description: Violation of business rules

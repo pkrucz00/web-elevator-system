@@ -1,0 +1,12 @@
+post:
+  operationId: next_step
+  summary: Starts the elevator system simulation
+  tags:
+    - simulation
+  responses:
+    200:
+      description: Successfully going to the next step
+      content:
+        application/json:
+          schema:
+            $ref: "../../models/simulation/building-state.yaml#/BuildingState"
