@@ -9,6 +9,9 @@ import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.services.ElevatorM
 import pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.dao.ElevatorRepository;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.errors.ObjectNotFoundException;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.mapper.ElevatorMapper;
+import pl.kruczkiewicz.pawel.elevator_system.person.PersonEntity;
+import pl.kruczkiewicz.pawel.elevator_system.person.application.IPersonService;
+import pl.kruczkiewicz.pawel.elevator_system.person.infrastructure.PersonRepository;
 import pl.kruczkiewicz.pawel.model.*;
 
 import java.util.UUID;
@@ -19,12 +22,15 @@ import java.util.function.Function;
 public class ElevatorService implements IElevatorService {
     private final ElevatorMapper elevatorMapper;
     private final ElevatorManagementService elevatorManagementService;
+
     private final ElevatorRepository elevatorRepository;
 
+    private final IPersonService personService;
+
     @Override
-    public BuildingStateDTO pickUp(Integer currentFloorId, PickUpRequestDTO pickUpRequestDTO) {
-//        PersonEntity person = addNewPersonToDatabase(currentFloorId, pickUpRequestDTO);
-//        ElevatorEntity chosenElevator = elevatorManagementService.chooseRightElevator(person);
+    public BuildingStateDTO pickUp(Integer destinationFloorNumber, PickUpRequestDTO pickUpRequestDTO) {
+        PersonEntity person = personService.addPersonToDatabase(destinationFloorNumber, pickUpRequestDTO);
+        ElevatorEntity chosenElevator = elevatorManagementService.chooseRightElevator(pickUpRequestDTO);
 //        chosenElevator.changeState();  //TODO wymyślić, na bazie czego winda powinna zmieniać stan
         return null;
     }

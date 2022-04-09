@@ -1,7 +1,7 @@
 PickUpRequest:
   type: object
   properties:
-    destinationFloor:
+    currentFloor:
       type: integer
       minimum: 0
     direction:

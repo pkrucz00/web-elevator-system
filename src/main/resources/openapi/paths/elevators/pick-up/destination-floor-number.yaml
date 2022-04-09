@@ -5,7 +5,7 @@ post:
     - elevators
   parameters:
     - in: path
-      name: currentFloorId
+      name: destination-floor-number
       schema:
         type: integer
         minimum: 1

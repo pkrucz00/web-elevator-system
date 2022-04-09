@@ -25,7 +25,7 @@ public class ElevatorController implements ElevatorsApi {
     }
 
     @Override
-    public ResponseEntity<BuildingStateDTO> pickUp(Integer currentFloorId, PickUpRequestDTO pickUpRequestDTO) {
-        return ResponseEntity.ok(elevatorService.pickUp(currentFloorId, pickUpRequestDTO));
+    public ResponseEntity<BuildingStateDTO> pickUp(Integer destinationFloorNumber, PickUpRequestDTO pickUpRequestDTO) {
+        return ResponseEntity.ok(elevatorService.pickUp(destinationFloorNumber, pickUpRequestDTO));
     }
 }

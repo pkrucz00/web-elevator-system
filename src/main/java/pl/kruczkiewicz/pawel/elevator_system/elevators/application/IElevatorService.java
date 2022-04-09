@@ -8,7 +8,7 @@ import java.util.UUID;
 @Service
 public interface IElevatorService {
 
-    BuildingStateDTO pickUp(Integer currentFloorId, PickUpRequestDTO pickUpRequestDTO);
+    BuildingStateDTO pickUp(Integer destinationFloorNumber, PickUpRequestDTO pickUpRequestDTO);
     
     ElevatorDTO patchElevatorStatus(UUID elevatorId, StateObjectDTO stateObjectDTO);
 
