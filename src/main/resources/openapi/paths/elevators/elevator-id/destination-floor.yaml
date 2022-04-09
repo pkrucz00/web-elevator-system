@@ -1,5 +1,5 @@
 patch:
-  operationId: patch_elevator_status
+  operationId: patch_elevator_destination_floor
   summary: change the status of the given elevator
   tags:
     - elevators

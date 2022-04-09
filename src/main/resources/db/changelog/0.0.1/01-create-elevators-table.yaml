@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_elevator_table
+      author: Pawel Kruczkiewicz
+      changes:
+        - createTable:
+            tableName: elevators
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: number
+                  type: int
+              - column:
+                  name: current_floor
+                  type: int
+              - column:
+                  name: destination_floor
+                  type: int
+              - column:
+                  name: state
+                  type: VARCHAR(6)
+

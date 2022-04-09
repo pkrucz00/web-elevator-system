@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_people_table
+      author: Pawel Kruczkiewicz
+      changes:
+        - createTable:
+            tableName: people
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: current_floor
+                  type: int
+              - column:
+                  name: destination_floor
+                  type: int
+              - column:
+                  name: elevator_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_people_elevators

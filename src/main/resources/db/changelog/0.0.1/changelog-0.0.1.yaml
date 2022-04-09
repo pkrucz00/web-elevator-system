@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - include:
+      relativeToChangelogFile: true
+      file: 01-create-elevators-table.yaml
+  - include:
+      relativeToChangelogFile: true
+      file: 02-create-people-table.yaml
+  - include:
+      relativeToChangelogFile: true
+      file: 03-insert-elevator-data.yaml

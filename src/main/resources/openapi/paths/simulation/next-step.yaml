@@ -1,6 +1,6 @@
 post:
   operationId: next_step
-  summary: Starts the elevator system simulation
+  summary: Computes the next step in the simulation
   tags:
     - simulation
   responses:

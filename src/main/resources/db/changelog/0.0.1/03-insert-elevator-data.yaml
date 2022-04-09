@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: load_elevator_data
+      author: Pawel Kruczkiewicz
+      changes:
+        - loadData:
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+              - column:
+                  name: number
+                  type: NUMERIC
+              - column:
+                  name: current_floor
+                  type: NUMERIC
+              - column:
+                  name: destination_floor
+                  type: NUMERIC
+              - column:
+                  name: state
+                  type: STRING
+            encoding: UTF-8
+            file: data/elevators.csv
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            separator: ;
+            tableName: elevators
