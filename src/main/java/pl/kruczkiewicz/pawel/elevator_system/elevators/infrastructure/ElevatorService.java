@@ -7,7 +7,8 @@ import pl.kruczkiewicz.pawel.elevator_system.elevators.ElevatorEntity;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.application.IElevatorService;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.services.ElevatorManagementService;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.dao.ElevatorRepository;
-import pl.kruczkiewicz.pawel.elevator_system.simulation.application.errors.ObjectNotFoundException;
+import pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.errors.ObjectNotFoundException;
+import pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.mapper.ElevatorMapper;
 import pl.kruczkiewicz.pawel.model.*;
 
 import java.util.UUID;

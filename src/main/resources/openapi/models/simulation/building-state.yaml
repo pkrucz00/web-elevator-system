@@ -5,7 +5,7 @@ BuildingState:
       type: array
       items:
         $ref: "../elevators/elevator.yaml#/Elevator"
-    waiting:
+    waitingPeople:
       type: array
       items:
         $ref: "utils/waiting-on-given-floor.yaml#/WaitingOnGivenFloor"

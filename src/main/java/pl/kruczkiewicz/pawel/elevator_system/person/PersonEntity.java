@@ -8,6 +8,8 @@ import pl.kruczkiewicz.pawel.elevator_system.elevators.ElevatorEntity;
 import javax.persistence.*;
 import java.util.UUID;
 
+import static java.util.Objects.isNull;
+
 @Getter
 @Setter
 @Entity
@@ -28,4 +30,8 @@ public class PersonEntity {
     @JoinColumn(name = "elevator_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private ElevatorEntity elevator;
+
+    public boolean isWaiting(){
+        return isNull(elevator);
+    }
 }

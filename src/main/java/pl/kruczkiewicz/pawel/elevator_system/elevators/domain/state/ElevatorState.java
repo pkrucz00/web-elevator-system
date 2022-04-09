@@ -19,9 +19,6 @@ public abstract class ElevatorState {
 
     private final int stateNumber;
 
-    private static final List<ElevatorState> inheritingClassesInstances = List.of(
-            new UpState(), new IdleState(), new DownState());
-
     public abstract ElevatorStateDTO getDtoEnum();
 
     public static ElevatorState of(Integer givenStateNumber){
