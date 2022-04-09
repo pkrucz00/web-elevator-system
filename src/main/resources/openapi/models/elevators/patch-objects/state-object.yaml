@@ -1,0 +1,7 @@
+StateObject:
+  type: object
+  properties:
+    state:
+      $ref: "../enums/elevator-state.yaml#/ElevatorState"
+  required:
+    - state

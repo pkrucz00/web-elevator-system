@@ -3,11 +3,13 @@ package pl.kruczkiewicz.pawel.elevator_system.elevators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.enums.ElevatorState;
+import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.ElevatorState;
+import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.impl.IdleState;
 import pl.kruczkiewicz.pawel.elevator_system.person.PersonEntity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -34,7 +36,7 @@ public class ElevatorEntity {
     private ElevatorState state;
 
     @OneToMany(mappedBy = "elevator", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<PersonEntity> peopleInside;
+    private Set<PersonEntity> peopleInside;
 
 
     public static ElevatorEntity getInitialElevator(int number){
@@ -49,7 +51,7 @@ public class ElevatorEntity {
         elevator.setId(uuidList.get(number-1));
         elevator.setNumber(number);
         elevator.setCurrentFloor(0);
-        elevator.setState(ElevatorState.IDLE);
+        elevator.setState(new IdleState());
         return elevator;
     }
 }

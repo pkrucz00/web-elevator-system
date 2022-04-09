@@ -1,6 +1,0 @@
-ElevatorStatus:
-  type: string
-  enum:
-    - up
-    - down
-    - idle

@@ -19,7 +19,7 @@ paths:
 
   /elevators/pick-up/{current-floor-number}:
     $ref: "paths/elevators/pick-up/current-floor-number.yaml"
-  /elevators/{elevator-id}/status:
-    $ref: "paths/elevators/elevator-id/status.yaml"
+  /elevators/{elevator-id}/state:
+    $ref: "paths/elevators/elevator-id/state.yaml"
   /elevators/{elevator-id}/destination-floor:
     $ref: "paths/elevators/elevator-id/destination-floor.yaml"

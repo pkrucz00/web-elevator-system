@@ -1,7 +1,0 @@
-StatusObject:
-  type: object
-  properties:
-    status:
-      $ref: "../enums/elevator-status.yaml#/ElevatorStatus"
-  required:
-    - status

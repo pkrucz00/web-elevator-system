@@ -1,4 +1,4 @@
-package pl.kruczkiewicz.pawel.elevator_system.elevators.domain;
+package pl.kruczkiewicz.pawel.elevator_system.elevators.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -6,9 +6,10 @@ import org.springframework.stereotype.Controller;
 import pl.kruczkiewicz.pawel.api.ElevatorsApi;
 import pl.kruczkiewicz.pawel.model.*;
 
+import java.util.UUID;
+
 @Controller
 public class ElevatorController implements ElevatorsApi {
-
     private final IElevatorService elevatorService;
 
     @Autowired
@@ -17,13 +18,13 @@ public class ElevatorController implements ElevatorsApi {
     }
 
     @Override
-    public ResponseEntity<ElevatorDTO> patchElevatorDestinationFloor(DestinationObjectDTO destinationObjectDTO) {
-        return ResponseEntity.ok(elevatorService.patchElevatorDestinationFloor(destinationObjectDTO));
+    public ResponseEntity<ElevatorDTO> patchElevatorDestinationFloor(UUID elevatorId, DestinationObjectDTO destinationObjectDTO) {
+        return ResponseEntity.ok(elevatorService.patchElevatorDestinationFloor(elevatorId, destinationObjectDTO));
     }
 
     @Override
-    public ResponseEntity<ElevatorDTO> patchElevatorStatus(StatusObjectDTO statusObjectDTO) {
-        return ResponseEntity.ok(elevatorService.patchElevatorStatus(statusObjectDTO));
+    public ResponseEntity<ElevatorDTO> patchElevatorState(UUID elevatorId, StateObjectDTO stateObjectDTO) {
+        return ResponseEntity.ok(elevatorService.patchElevatorStatus(elevatorId, stateObjectDTO));
     }
 
     @Override

@@ -1,11 +1,11 @@
 patch:
   operationId: patch_elevator_destination_floor
-  summary: change the status of the given elevator
+  summary: change the state of the given elevator
   tags:
     - elevators
-  paramters:
+  parameters:
     - in: path
-      name: elevatorId
+      name: elevator-id
       schema:
         type: string
         format: uuid
@@ -18,7 +18,7 @@ patch:
           $ref: "../../../models/elevators/patch-objects/destination-object.yaml#/DestinationObject"
   responses:
     200:
-      description: Elevator with the changed status
+      description: Elevator with the changed state
       content:
         application/json:
           schema:

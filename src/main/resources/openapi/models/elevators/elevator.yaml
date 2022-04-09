@@ -16,8 +16,8 @@ Elevator:
     numberOfPeopleInside:
       type: integer
       minimum: 0
-    status:
-      $ref: "enums/elevator-status.yaml#/ElevatorStatus"
+    state:
+      $ref: "enums/elevator-state.yaml#/ElevatorState"
   required:
     - id
     - number

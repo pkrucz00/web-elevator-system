@@ -1,11 +1,11 @@
 patch:
-  operationId: patch_elevator_status
-  summary: change the status of the given elevator
+  operationId: patch_elevator_state
+  summary: change the state of the given elevator
   tags:
     - elevators
-  paramters:
+  parameters:
     - in: path
-      name: elevatorId
+      name: elevator-id
       schema:
         type: string
         format: uuid
@@ -15,7 +15,7 @@ patch:
     content:
       application/json:
         schema:
-          $ref: "../../../models/elevators/patch-objects/status-object.yaml#/StatusObject"
+          $ref: "../../../models/elevators/patch-objects/state-object.yaml#/StateObject"
   responses:
     200:
       description: Elevator with changed direction
