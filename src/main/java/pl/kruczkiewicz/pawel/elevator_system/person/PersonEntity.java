@@ -28,15 +28,30 @@ public class PersonEntity {
     private Integer destinationFloor;
 
     @JoinColumn(name = "elevator_inside_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private ElevatorEntity elevatorPersonIsIn;
 
     @JoinColumn(name = "elevator_waiting_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private ElevatorEntity elevatorPersonAwaits;
 
 
     public boolean isWaiting(){
         return isNull(elevatorPersonIsIn);
+    }
+
+    public boolean isPersonOnItsFloor(){
+        return destinationFloor.equals(currentFloor);
+    }
+
+    public PersonEntity enterElevator(ElevatorEntity elevator){
+        elevatorPersonAwaits.deleteAwaitingPerson(this);
+        elevator.addPersonInside(this);
+        return this;
+    }
+
+    public PersonEntity exitElevator(){
+        elevatorPersonIsIn.deletePersonInside(this);
+        return this;
     }
 }

@@ -3,6 +3,7 @@ package pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.impl;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.enums.ElevatorStateEnum;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.ElevatorState;
 
+import java.util.Optional;
 import java.util.Set;
 
 public class IdleState extends ElevatorState {
@@ -18,6 +19,6 @@ public class IdleState extends ElevatorState {
 
     @Override
     public Integer computeDestinationFloor(Set<Integer> jobs) {
-        return null;
+        return jobs.stream().reduce(Math::min).orElse(null);
     }
 }

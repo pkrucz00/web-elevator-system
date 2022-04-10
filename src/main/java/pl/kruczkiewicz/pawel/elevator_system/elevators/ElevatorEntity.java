@@ -62,6 +62,29 @@ public class ElevatorEntity {
         return this;
     }
 
+    public ElevatorEntity deleteAwaitingPerson(PersonEntity person){
+        person.setElevatorPersonAwaits(null);
+        peopleWaiting.remove(person);
+        return this;
+    }
+
+    public ElevatorEntity addPersonInside(PersonEntity personInside){
+        if (peopleWaiting == null){
+            peopleWaiting = new HashSet<>();
+        }
+
+        personInside.setElevatorPersonIsIn(this);
+        peopleInside.add(personInside);
+
+        return this;
+    }
+
+    public ElevatorEntity deletePersonInside(PersonEntity person){
+        person.setElevatorPersonIsIn(null);
+        peopleInside.remove(person);
+        return this;
+    }
+
     public ElevatorEntity changeDestinationFloorBasedOnJobs(){
         Integer newDestinationFloor = state.computeDestinationFloor(getJobs());
         this.setDestinationFloor(newDestinationFloor);
@@ -71,25 +94,24 @@ public class ElevatorEntity {
 
     public boolean isFloorInTrackRange(int floor){
         return switch (state.getStateEnum()){
+            case IDLE -> false;
             case UP -> currentFloor <= floor && floor <= destinationFloor;
             case DOWN -> destinationFloor <= floor && floor <= currentFloor;
-            case IDLE -> false;
+
         };
     }
 
-    public static ElevatorEntity getInitialElevator(int number){
-        List<UUID> uuidList = Stream.of(
-                "6816aa02-c8a3-41ea-be6b-7ec5b363bf3c",
-                "a3e467b0-2a19-48c6-bf22-4d2479001a16",
-                "606b4c8e-df55-40fb-b97f-fbbe80045ee7",
-                "60a88596-bbdc-4905-985d-563e07ab14c7",
-                "62be4663-7ff5-44f6-a401-a183411443aa").map(UUID::fromString).toList();
+    public ElevatorEntity changeStateBasedOnDestination() {
+        setState(state.computeNextState(currentFloor, destinationFloor));
+        return this;
+    }
 
-        var elevator = new ElevatorEntity();
-        elevator.setId(uuidList.get(number-1));
-        elevator.setNumber(number);
-        elevator.setCurrentFloor(0);
-        elevator.setState(new IdleState());
-        return elevator;
+    public ElevatorEntity moveAccordingToState() {
+        int floorChange = state.getStateNumber();
+        int newCurrentFloor = currentFloor + floorChange;
+        setCurrentFloor(newCurrentFloor);
+        peopleInside.forEach(person -> person.setCurrentFloor(newCurrentFloor));
+
+        return this;
     }
 }

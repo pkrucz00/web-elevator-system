@@ -1,16 +1,15 @@
 package pl.kruczkiewicz.pawel.elevator_system.person.application;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.kruczkiewicz.pawel.elevator_system.elevators.ElevatorEntity;
 import pl.kruczkiewicz.pawel.elevator_system.person.PersonEntity;
-import pl.kruczkiewicz.pawel.elevator_system.person.infrastructure.PersonRepository;
-import pl.kruczkiewicz.pawel.model.PickUpRequestDTO;
+
+import java.util.List;
 
 @Service
-
 public interface IPersonService {
 
+    List<PersonEntity> movePeopleIntoElevators(List<ElevatorEntity> elevators);
 
-
-    PersonEntity addPersonToDatabase(Integer currentFloor, PickUpRequestDTO pickUpRequest);
+    void movePeopleOutOfElevators();
 }
