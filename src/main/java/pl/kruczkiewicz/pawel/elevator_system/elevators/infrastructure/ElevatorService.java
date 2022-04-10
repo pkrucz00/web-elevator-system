@@ -11,6 +11,7 @@ import pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.errors.Obj
 import pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.mapper.ElevatorMapper;
 import pl.kruczkiewicz.pawel.elevator_system.person.PersonEntity;
 import pl.kruczkiewicz.pawel.elevator_system.person.application.IPersonService;
+import pl.kruczkiewicz.pawel.elevator_system.person.infrastructure.PersonMapper;
 import pl.kruczkiewicz.pawel.elevator_system.person.infrastructure.PersonRepository;
 import pl.kruczkiewicz.pawel.model.*;
 
@@ -26,13 +27,15 @@ public class ElevatorService implements IElevatorService {
     private final ElevatorRepository elevatorRepository;
 
     private final IPersonService personService;
+    private final PersonMapper personMapper;
 
     @Override
-    public BuildingStateDTO pickUp(Integer destinationFloorNumber, PickUpRequestDTO pickUpRequestDTO) {
-        PersonEntity person = personService.addPersonToDatabase(destinationFloorNumber, pickUpRequestDTO);
+    public ElevatorDTO pickUp(Integer destinationFloorNumber, PickUpRequestDTO pickUpRequestDTO) {
+        PersonEntity personAwaiting = personMapper.destinationFloorAndPickupToPerson(destinationFloorNumber, pickUpRequestDTO);
         ElevatorEntity chosenElevator = elevatorManagementService.chooseRightElevator(pickUpRequestDTO);
-//        chosenElevator.changeState();  //TODO wymyślić, na bazie czego winda powinna zmieniać stan
-        return null;
+        ElevatorEntity elevatorWithNewPersonInside = chosenElevator.addAwaitingPerson(personAwaiting);
+        ElevatorEntity savedEntity = elevatorRepository.save(elevatorWithNewPersonInside);
+        return elevatorMapper.elevatorEntityToElevatorDTO(savedEntity);
     }
 
     @Override

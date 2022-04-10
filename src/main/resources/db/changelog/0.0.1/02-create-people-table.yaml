@@ -19,7 +19,12 @@ databaseChangeLog:
                   name: destination_floor
                   type: int
               - column:
-                  name: elevator_id
+                  name: elevator_inside_id
                   type: uuid
                   constraints:
-                    foreignKeyName: fk_people_elevators
+                    foreignKeyName: fk_people_inside_elevators
+              - column:
+                  name: elevator_waiting_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_people_waiting_elevators

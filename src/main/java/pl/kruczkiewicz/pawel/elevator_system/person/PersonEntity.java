@@ -27,11 +27,16 @@ public class PersonEntity {
     @Column(name = "destination_floor")
     private Integer destinationFloor;
 
-    @JoinColumn(name = "elevator_id")
+    @JoinColumn(name = "elevator_inside_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private ElevatorEntity elevator;
+    private ElevatorEntity elevatorPersonIsIn;
+
+    @JoinColumn(name = "elevator_waiting_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ElevatorEntity elevatorPersonAwaits;
+
 
     public boolean isWaiting(){
-        return isNull(elevator);
+        return isNull(elevatorPersonIsIn);
     }
 }

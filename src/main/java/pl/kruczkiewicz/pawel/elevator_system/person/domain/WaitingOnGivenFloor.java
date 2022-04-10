@@ -17,7 +17,7 @@ public record WaitingOnGivenFloor(int floorNumber, long numberOfPeople) {
     }
 
     public static List<WaitingOnGivenFloor> peopleToWaitingListEntity(List<PersonEntity> waiting){
-        List<Integer> possibleFloors = waiting.stream().map(PersonEntity::getCurrentFloor).toList();
+        List<Integer> possibleFloors = waiting.stream().map(PersonEntity::getCurrentFloor).distinct().toList();
         return possibleFloors.stream().map(Function2.of(WaitingOnGivenFloor::of).apply(waiting)).toList();
-    };
+    }
 }

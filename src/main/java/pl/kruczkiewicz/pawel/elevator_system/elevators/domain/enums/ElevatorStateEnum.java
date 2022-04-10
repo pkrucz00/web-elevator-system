@@ -1,5 +1,6 @@
-package pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state;
+package pl.kruczkiewicz.pawel.elevator_system.elevators.domain.enums;
 
+import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.ElevatorState;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.impl.DownState;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.impl.IdleState;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.impl.UpState;

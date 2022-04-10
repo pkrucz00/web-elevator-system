@@ -8,5 +8,5 @@ import java.util.UUID;
 
 public interface PersonRepository extends JpaRepository<PersonEntity, UUID> {
 
-    List<PersonEntity> findAllByElevatorIsNull();
+    List<PersonEntity> findAllByElevatorPersonIsInIsNull();
 }

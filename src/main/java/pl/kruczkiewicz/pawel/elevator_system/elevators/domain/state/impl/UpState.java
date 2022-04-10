@@ -1,7 +1,9 @@
 package pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.impl;
 
+import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.enums.ElevatorStateEnum;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.ElevatorState;
-import pl.kruczkiewicz.pawel.model.ElevatorStateDTO;
+
+import java.util.Set;
 
 public class UpState extends ElevatorState {
     public UpState() {
@@ -9,7 +11,12 @@ public class UpState extends ElevatorState {
     }
 
     @Override
-    public ElevatorStateDTO getDtoEnum() {
-        return ElevatorStateDTO.UP;
+    public ElevatorStateEnum getStateEnum() {
+        return ElevatorStateEnum.UP;
+    }
+
+    @Override
+    public Integer computeDestinationFloor(Set<Integer> jobs) {
+        return jobs.stream().reduce(Math::max).orElse(null);
     }
 }

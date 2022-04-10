@@ -24,7 +24,7 @@ public class SimulationService implements ISimulationService {
     @Override
     public BuildingStateDTO getSimulationStatus() {
         List<ElevatorEntity> elevatorEntities = elevatorRepository.findAll();
-        List<PersonEntity> waitingPeopleEntities = personRepository.findAllByElevatorIsNull();
+        List<PersonEntity> waitingPeopleEntities = personRepository.findAllByElevatorPersonIsInIsNull();
         return mapper.elevatorsAndPeopleToBuildingState(
                 BuildingState.of(elevatorEntities, waitingPeopleEntities));
     }

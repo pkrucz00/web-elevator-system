@@ -8,9 +8,11 @@ import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.impl.IdleSta
 import pl.kruczkiewicz.pawel.elevator_system.person.PersonEntity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Getter
@@ -35,9 +37,45 @@ public class ElevatorEntity {
     @Column(name = "state")
     private ElevatorState state;
 
-    @OneToMany(mappedBy = "elevator", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "elevatorPersonIsIn", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<PersonEntity> peopleInside;
 
+    @OneToMany(mappedBy = "elevatorPersonAwaits",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PersonEntity> peopleWaiting;
+
+    public Set<Integer> getJobs(){
+        return Stream.concat(
+                peopleInside.stream().map(PersonEntity::getDestinationFloor),
+                peopleWaiting.stream().map(PersonEntity::getCurrentFloor))
+                .collect(Collectors.toSet());
+    }
+
+
+    public ElevatorEntity addAwaitingPerson(PersonEntity personAwaiting) {
+        if (peopleWaiting == null){
+            peopleWaiting = new HashSet<>();
+        }
+
+        personAwaiting.setElevatorPersonAwaits(this);
+        peopleWaiting.add(personAwaiting);
+
+        return this;
+    }
+
+    public ElevatorEntity changeDestinationFloorBasedOnJobs(){
+        Integer newDestinationFloor = state.computeDestinationFloor(getJobs());
+        this.setDestinationFloor(newDestinationFloor);
+
+        return this;
+    }
+
+    public boolean isFloorInTrackRange(int floor){
+        return switch (state.getStateEnum()){
+            case UP -> currentFloor <= floor && floor <= destinationFloor;
+            case DOWN -> destinationFloor <= floor && floor <= currentFloor;
+            case IDLE -> false;
+        };
+    }
 
     public static ElevatorEntity getInitialElevator(int number){
         List<UUID> uuidList = Stream.of(

@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface PersonMapper {
 
-    PersonEntity destinationFloorAndPickupToPerson(Integer currentFloor, PickUpRequestDTO pickUpRequest);
+    PersonEntity destinationFloorAndPickupToPerson(Integer destinationFloor, PickUpRequestDTO pickUpRequest);
 
     List<WaitingOnGivenFloorDTO> waitingListEntityToDTO(List<WaitingOnGivenFloor> waiting);
 }

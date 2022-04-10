@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.ElevatorEntity;
+import pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.mapper.enums.ElevatorStateMapper;
 import pl.kruczkiewicz.pawel.elevator_system.person.PersonEntity;
 import pl.kruczkiewicz.pawel.model.DestinationObjectDTO;
 import pl.kruczkiewicz.pawel.model.ElevatorDTO;
