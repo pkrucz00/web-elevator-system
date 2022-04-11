@@ -1,8 +1,6 @@
 package pl.kruczkiewicz.pawel.elevator_system.elevators;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.ElevatorState;
 import pl.kruczkiewicz.pawel.elevator_system.person.PersonEntity;
 
@@ -17,8 +15,10 @@ import java.util.stream.Stream;
 @Getter
 @Setter
 @Entity
+@Builder(toBuilder = true)
 @Table(name = "elevators")
 @NoArgsConstructor
+@AllArgsConstructor
 public class ElevatorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,7 +36,7 @@ public class ElevatorEntity {
     @Column(name = "state")
     private ElevatorState state;
 
-    @OneToMany(mappedBy = "elevatorPersonIsInId", fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "elevatorPersonIsInId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PersonEntity> peopleInside;
 
     @OneToMany(mappedBy = "elevatorPersonAwaitsId",  fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = true)
@@ -59,12 +59,6 @@ public class ElevatorEntity {
         peopleWaiting.add(personAwaiting);
 
         return this;
-    }
-
-    public PersonEntity deleteAwaitingPerson(PersonEntity person){
-        person.setElevatorPersonAwaitsId(null);
-        peopleWaiting.remove(person);
-        return person;
     }
 
     public PersonEntity addPersonInside(PersonEntity personInside){
@@ -107,23 +101,19 @@ public class ElevatorEntity {
         return this;
     }
 
-    public void deletePersonInside(PersonEntity person){
-        person.setElevatorPersonIsInId(null);
-        peopleInside.remove(person);
-    }
-
     public ElevatorEntity letPeopleIn() {
-        peopleWaiting.stream()
+        List<PersonEntity> newPeopleInside = peopleWaiting.stream()
                 .filter(person -> currentFloor.equals(person.getCurrentFloor()))
-                .map(this::addPersonInside)
-                .forEach(this::deleteAwaitingPerson);
-
+                .map(this::addPersonInside).toList();
+        newPeopleInside.forEach(person -> person.setElevatorPersonAwaitsId(null));
+        peopleWaiting.removeAll(newPeopleInside);
         return this;
     }
 
     public ElevatorEntity letPeopleOut() {
         List<PersonEntity> peopleThatCanExit = peopleInside.stream().filter(PersonEntity::isPersonOnItsFloor).toList();
-        peopleThatCanExit.forEach(this::deletePersonInside);
+        peopleThatCanExit.forEach(person -> person.setElevatorPersonIsInId(null));
+        peopleInside.removeAll(peopleThatCanExit);
         return this;
     }
 }

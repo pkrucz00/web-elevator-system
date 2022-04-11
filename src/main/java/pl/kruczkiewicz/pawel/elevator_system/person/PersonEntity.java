@@ -1,8 +1,6 @@
 package pl.kruczkiewicz.pawel.elevator_system.person;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -13,8 +11,10 @@ import static java.util.Objects.isNull;
 @Getter
 @Setter
 @Entity
+@Builder(toBuilder = true)
 @Table(name = "people")
 @NoArgsConstructor
+@AllArgsConstructor
 public class PersonEntity {
 
     @Id
