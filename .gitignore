@@ -52,3 +52,4 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+/pawel_kruczkiewicz.bundle
