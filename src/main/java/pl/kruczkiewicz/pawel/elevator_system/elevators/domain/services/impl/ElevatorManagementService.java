@@ -1,10 +1,11 @@
-package pl.kruczkiewicz.pawel.elevator_system.elevators.domain.services;
+package pl.kruczkiewicz.pawel.elevator_system.elevators.domain.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.ElevatorEntity;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.enums.ElevatorDirectionEnum;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.enums.ElevatorStateEnum;
+import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.services.IElevatorManagementService;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.dao.ElevatorRepository;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.mapper.enums.ElevatorDirectionMapper;
 import pl.kruczkiewicz.pawel.model.PickUpRequestDTO;
@@ -16,10 +17,8 @@ import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
-public class ElevatorManagementService implements IElevatorManagementService{
-
+public class ElevatorManagementService implements IElevatorManagementService {
     private final ElevatorDirectionMapper directionMapper;
-
     private final ElevatorRepository elevatorRepository;
 
 
@@ -47,7 +46,7 @@ public class ElevatorManagementService implements IElevatorManagementService{
         return elevators.stream()
                 .filter(elevator -> isElevatorOfGivenState(ElevatorStateEnum.IDLE, elevator))
                 .min(
-                    Comparator.comparing(elevator -> Math.abs(elevator.getCurrentFloor() - floorNumber)));
+                        Comparator.comparing(elevator -> Math.abs(elevator.getCurrentFloor() - floorNumber)));
     }
 
     private Optional<ElevatorEntity> getClosestPassingByElevator(Integer floorNumber, ElevatorStateEnum correspondingState, List<ElevatorEntity> elevators) {

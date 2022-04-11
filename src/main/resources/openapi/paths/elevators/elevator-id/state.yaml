@@ -26,6 +26,4 @@ patch:
     400:
       description: Bad Request
     404:
-      description: Elevator with the given id doesn't exist
-    422:
-      description: Violation of business rules
+      description: Elevator with given id doesnt exist

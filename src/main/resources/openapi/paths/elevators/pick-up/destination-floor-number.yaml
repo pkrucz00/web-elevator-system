@@ -8,8 +8,6 @@ post:
       name: destination-floor-number
       schema:
         type: integer
-        minimum: 1
-        maximum: 42
       required: true
   requestBody:
     required: true
@@ -26,7 +24,3 @@ post:
             $ref: "../../../models/elevators/elevator.yaml#/Elevator"
     400:
       description: Bad Request
-    404:
-      description: Wrong value of the parameter "current floor"
-    422:
-      description: Business Logic Violation

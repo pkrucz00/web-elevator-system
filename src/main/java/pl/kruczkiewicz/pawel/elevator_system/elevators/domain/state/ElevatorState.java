@@ -9,7 +9,6 @@ import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.impl.UpState
 
 import javax.persistence.MappedSuperclass;
 import java.util.Arrays;
-import java.util.Optional;
 import java.util.Set;
 
 @Getter
@@ -31,7 +30,7 @@ public abstract class ElevatorState {
     }
 
     public ElevatorState computeNextState(Integer currentFloor, Integer destinationFloor) {
-        if (destinationFloor == null)
+        if (destinationFloor == null || currentFloor.equals(destinationFloor))
             return new IdleState();
 
         return destinationFloor - currentFloor > 0 ? new UpState() : new DownState();

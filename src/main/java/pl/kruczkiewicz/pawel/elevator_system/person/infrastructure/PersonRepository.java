@@ -9,8 +9,8 @@ import java.util.UUID;
 public interface PersonRepository extends JpaRepository<PersonEntity, UUID> {
 
     // people waiting for an elevator
-    List<PersonEntity> findAllByElevatorPersonIsInIsNull();
+    List<PersonEntity> findAllByElevatorPersonIsInIdIsNull();
 
     // people in an elevator
-    List<PersonEntity> findAllByElevatorPersonIsInIsNotNull();
+    List<PersonEntity> findAllByElevatorPersonIsInIdIsNotNull();
 }

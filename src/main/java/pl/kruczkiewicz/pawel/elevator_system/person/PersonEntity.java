@@ -3,9 +3,9 @@ package pl.kruczkiewicz.pawel.elevator_system.person;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.kruczkiewicz.pawel.elevator_system.elevators.ElevatorEntity;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 import static java.util.Objects.isNull;
@@ -27,31 +27,31 @@ public class PersonEntity {
     @Column(name = "destination_floor")
     private Integer destinationFloor;
 
-    @JoinColumn(name = "elevator_inside_id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    private ElevatorEntity elevatorPersonIsIn;
+    @Column(name = "elevator_inside_id")
+    private UUID elevatorPersonIsInId;
 
-    @JoinColumn(name = "elevator_waiting_id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    private ElevatorEntity elevatorPersonAwaits;
+    @Column(name = "elevator_waiting_id")
+    private UUID elevatorPersonAwaitsId;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PersonEntity that = (PersonEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(currentFloor, that.currentFloor) && Objects.equals(destinationFloor, that.destinationFloor) && Objects.equals(elevatorPersonIsInId, that.elevatorPersonIsInId) && Objects.equals(elevatorPersonAwaitsId, that.elevatorPersonAwaitsId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, currentFloor, destinationFloor, elevatorPersonIsInId, elevatorPersonAwaitsId);
+    }
 
     public boolean isWaiting(){
-        return isNull(elevatorPersonIsIn);
+        return isNull(elevatorPersonIsInId);
     }
 
     public boolean isPersonOnItsFloor(){
         return destinationFloor.equals(currentFloor);
     }
 
-    public PersonEntity enterElevator(ElevatorEntity elevator){
-        elevatorPersonAwaits.deleteAwaitingPerson(this);
-        elevator.addPersonInside(this);
-        return this;
-    }
-
-    public PersonEntity exitElevator(){
-        elevatorPersonIsIn.deletePersonInside(this);
-        return this;
-    }
 }

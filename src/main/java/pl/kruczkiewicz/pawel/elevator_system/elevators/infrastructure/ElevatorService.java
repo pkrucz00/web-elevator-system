@@ -5,14 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.ElevatorEntity;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.application.IElevatorService;
-import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.services.ElevatorManagementService;
+import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.services.IElevatorManagementService;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.dao.ElevatorRepository;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.errors.ObjectNotFoundException;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.mapper.ElevatorMapper;
 import pl.kruczkiewicz.pawel.elevator_system.person.PersonEntity;
-import pl.kruczkiewicz.pawel.elevator_system.person.application.IPersonService;
 import pl.kruczkiewicz.pawel.elevator_system.person.infrastructure.PersonMapper;
-import pl.kruczkiewicz.pawel.elevator_system.person.infrastructure.PersonRepository;
 import pl.kruczkiewicz.pawel.model.*;
 
 import java.util.UUID;
@@ -22,11 +20,10 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class ElevatorService implements IElevatorService {
     private final ElevatorMapper elevatorMapper;
-    private final ElevatorManagementService elevatorManagementService;
+    private final IElevatorManagementService elevatorManagementService;
 
     private final ElevatorRepository elevatorRepository;
 
-    private final IPersonService personService;
     private final PersonMapper personMapper;
 
     @Override

@@ -1,7 +1,10 @@
 package pl.kruczkiewicz.pawel.elevator_system.elevators.infrastructure.errors;
 
-public class ObjectNotFoundException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+public class ObjectNotFoundException extends ResponseStatusException {
     public ObjectNotFoundException(String message) {
-        super(message);
+        super(HttpStatus.NOT_FOUND, message);
     }
 }

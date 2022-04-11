@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.ElevatorState;
-import pl.kruczkiewicz.pawel.elevator_system.elevators.domain.state.impl.IdleState;
 import pl.kruczkiewicz.pawel.elevator_system.person.PersonEntity;
 
 import javax.persistence.*;
@@ -37,10 +36,10 @@ public class ElevatorEntity {
     @Column(name = "state")
     private ElevatorState state;
 
-    @OneToMany(mappedBy = "elevatorPersonIsIn", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "elevatorPersonIsInId", fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = true)
     private Set<PersonEntity> peopleInside;
 
-    @OneToMany(mappedBy = "elevatorPersonAwaits",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "elevatorPersonAwaitsId",  fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = true)
     private Set<PersonEntity> peopleWaiting;
 
     public Set<Integer> getJobs(){
@@ -53,37 +52,31 @@ public class ElevatorEntity {
 
     public ElevatorEntity addAwaitingPerson(PersonEntity personAwaiting) {
         if (peopleWaiting == null){
-            peopleWaiting = new HashSet<>();
+            peopleWaiting = new HashSet<>();    //todo change it to TreeSet and add comparator
         }
 
-        personAwaiting.setElevatorPersonAwaits(this);
+        personAwaiting.setElevatorPersonAwaitsId(this.id);
         peopleWaiting.add(personAwaiting);
 
         return this;
     }
 
-    public ElevatorEntity deleteAwaitingPerson(PersonEntity person){
-        person.setElevatorPersonAwaits(null);
+    public PersonEntity deleteAwaitingPerson(PersonEntity person){
+        person.setElevatorPersonAwaitsId(null);
         peopleWaiting.remove(person);
-        return this;
+        return person;
     }
 
-    public ElevatorEntity addPersonInside(PersonEntity personInside){
-        if (peopleWaiting == null){
-            peopleWaiting = new HashSet<>();
+    public PersonEntity addPersonInside(PersonEntity personInside){
+        if (peopleInside == null){
+            peopleInside = new HashSet<>();
         }
 
-        personInside.setElevatorPersonIsIn(this);
+        personInside.setElevatorPersonIsInId(this.id);
         peopleInside.add(personInside);
-
-        return this;
+        return personInside;
     }
 
-    public ElevatorEntity deletePersonInside(PersonEntity person){
-        person.setElevatorPersonIsIn(null);
-        peopleInside.remove(person);
-        return this;
-    }
 
     public ElevatorEntity changeDestinationFloorBasedOnJobs(){
         Integer newDestinationFloor = state.computeDestinationFloor(getJobs());
@@ -97,7 +90,6 @@ public class ElevatorEntity {
             case IDLE -> false;
             case UP -> currentFloor <= floor && floor <= destinationFloor;
             case DOWN -> destinationFloor <= floor && floor <= currentFloor;
-
         };
     }
 
@@ -112,6 +104,26 @@ public class ElevatorEntity {
         setCurrentFloor(newCurrentFloor);
         peopleInside.forEach(person -> person.setCurrentFloor(newCurrentFloor));
 
+        return this;
+    }
+
+    public void deletePersonInside(PersonEntity person){
+        person.setElevatorPersonIsInId(null);
+        peopleInside.remove(person);
+    }
+
+    public ElevatorEntity letPeopleIn() {
+        peopleWaiting.stream()
+                .filter(person -> currentFloor.equals(person.getCurrentFloor()))
+                .map(this::addPersonInside)
+                .forEach(this::deleteAwaitingPerson);
+
+        return this;
+    }
+
+    public ElevatorEntity letPeopleOut() {
+        List<PersonEntity> peopleThatCanExit = peopleInside.stream().filter(PersonEntity::isPersonOnItsFloor).toList();
+        peopleThatCanExit.forEach(this::deletePersonInside);
         return this;
     }
 }
